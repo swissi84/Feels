@@ -14,7 +14,6 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -131,9 +130,10 @@ class MainActivity : ComponentActivity() {
                                         MoodDetailRoute(
                                             name = moodEntry.name,
                                             mood = moodEntry.mood,
-                                            moodImage = moodEntry.moodImage,
+                                            moodFactor = moodEntry.moodFactor,
                                             timestamp = moodEntry.timestamp,
                                             moodText = moodEntry.moodText,
+                                            moodWeather = moodEntry.moodWeather,
                                             )
                                     )
                                 }
@@ -148,9 +148,10 @@ class MainActivity : ComponentActivity() {
                                 moodEntry = MoodEntry(
                                     name = moodDetailRoute.name,
                                     mood = moodDetailRoute.mood,
-                                    moodImage = moodDetailRoute.moodImage,
+                                    moodFactor = moodDetailRoute.moodFactor,
                                     timestamp = moodDetailRoute.timestamp,
-                                    moodText = moodDetailRoute.moodText
+                                    moodText = moodDetailRoute.moodText,
+                                    moodWeather = moodDetailRoute.moodWeather
                                 )
                             )
                         }
@@ -178,7 +179,8 @@ object SettingsView
 data class MoodDetailRoute(
     val name: String,
     val mood: Double,
-    val moodImage: String,
+    val moodFactor: String,
+    val moodWeather: String,
     val moodText: String,
     val timestamp: Long,
 )

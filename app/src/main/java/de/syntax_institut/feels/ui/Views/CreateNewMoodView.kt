@@ -3,16 +3,10 @@
 package de.syntax_institut.feels.ui.Views
 
 import android.os.Build
-import androidx.annotation.IntRange
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.ScrollableState
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -23,7 +17,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
@@ -39,7 +32,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 
@@ -48,13 +40,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 
-import de.syntax_institut.feels.data.MoodEntry
 import de.syntax_institut.feels.ui.Models.MoodListViewModel
 import de.syntax_institut.feels.ui.Views.ViewComponents.RoundedField
-import de.syntax_institut.feels.ui.theme.FeelsTheme
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -68,12 +55,13 @@ fun CreateNewMoodView(
     var selectedMood by remember { mutableStateOf("😐") }
 
     val moodEmojis = listOf("😞", "😐", "😃")
-    val moodFactors = listOf("Finanzen", "Familie", "Gesundheit", "Arbeit", "Freizeit", "Liebe")
+    var moodFactors = listOf("Finanzen", "Familie", "Gesundheit", "Arbeit", "Freizeit", "Liebe")
     val weatherFactors = listOf("☀️ Sonnig", "🌧 Regen", "☁️ Wolkig", "❄️ Kalt")
 
     var newMoodName by remember { mutableStateOf("") }
     var newMoodText by remember { mutableStateOf("") }
-    var newMoodImage by remember { mutableStateOf("") }
+    var newMoodFactor by remember { mutableStateOf("") }
+    var newWeatherFactor by remember { mutableStateOf("") }
 
     val scrollState = rememberScrollState()
 
@@ -145,14 +133,19 @@ fun CreateNewMoodView(
         FlowRow(
             modifier = Modifier
                 .fillMaxWidth()
-                .horizontalScroll(scrollState)
-                .clickable { },
+                .horizontalScroll(scrollState),
+
 
             horizontalArrangement = Arrangement.Center,
 
             ) {
             moodFactors.forEach { factor ->
-                RoundedField(label = factor, backgroundColor = Color(0xFF8B5D5D))
+                RoundedField(
+                    label = factor, backgroundColor = Color(0xFF693BAB),
+                    onClick = {
+                        newMoodFactor = factor
+                    }
+                )
             }
         }
 
@@ -163,7 +156,12 @@ fun CreateNewMoodView(
             horizontalArrangement = Arrangement.Center
         ) {
             weatherFactors.forEach { factor ->
-                RoundedField(label = factor, backgroundColor = Color(0xFF2B65EC))
+                RoundedField(
+                    label = factor, backgroundColor = Color(0xFF2B65EC),
+                    onClick = {
+                        newWeatherFactor = factor
+                    }
+                )
             }
         }
 
@@ -192,9 +190,10 @@ fun CreateNewMoodView(
                 onClick = {
                     viewModel.newMoodEntry(
                         mood = sliderValue.toDouble(),
-                        moodImage = newMoodImage,
+                        moodFactor = newMoodFactor,
                         moodText = newMoodText,
                         name = newMoodName,
+                        moodWeather = newWeatherFactor,
                     )
                 }
             )
@@ -212,6 +211,8 @@ fun CreateNewMoodView(
                 Text("Bitte gib einen Titel ein!")
             }
         }
+        Text(newMoodFactor)
+        Text(newWeatherFactor)
     }
 }
 

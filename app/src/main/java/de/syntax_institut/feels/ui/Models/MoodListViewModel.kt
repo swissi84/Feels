@@ -62,16 +62,17 @@ open class MoodListViewModel(application: Application) : AndroidViewModel(applic
 
     //Room
     @RequiresApi(Build.VERSION_CODES.O)
-    fun newMoodEntry(name: String, mood: Double, moodImage: String, moodText: String ) {
+    fun newMoodEntry(name: String, mood: Double, moodFactor: String, moodText: String, moodWeather:String ) {
         viewModelScope.launch {
             dao.insert(
                 MoodEntry(
                     name = name,
+                    moodText = moodText,
                     mood = mood,
-                    moodImage = moodImage,
+                    moodFactor = moodFactor,
+                    moodWeather = moodWeather,
                     timestamp = System.currentTimeMillis(),
-                    moodText = moodText
-                )
+                    )
             )
         }
     }
@@ -103,5 +104,13 @@ open class MoodListViewModel(application: Application) : AndroidViewModel(applic
         return sdf.format(Date(timestamp))
     }
 
+    fun MoodToEmoji(mood: Double): String {
+        val moodEmojis = listOf("😞", "😐", "😃")
 
+        return when {
+            mood < 4 -> moodEmojis[0]
+            mood < 7 -> moodEmojis[1]
+            else -> moodEmojis[2]
+        }
+    }
 }

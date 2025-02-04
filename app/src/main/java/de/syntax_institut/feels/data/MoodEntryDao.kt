@@ -17,7 +17,7 @@ interface MoodEntryDao {
     @Query("SELECT * from moodEntrys ORDER BY id ASC")
     fun getAllItems(): Flow<List<MoodEntry>>
 
-    @Query("SELECT * FROM moodEntrys ORDER BY timestamp DESC LIMIT 7")
+    @Query("SELECT * FROM moodEntrys ORDER BY timestamp ASC LIMIT 7")
     fun getLast7MoodEntries(): Flow<List<MoodEntry>>
 
     @Query("SELECT AVG(mood) FROM moodEntrys WHERE timestamp >= :sevenDaysAgo")

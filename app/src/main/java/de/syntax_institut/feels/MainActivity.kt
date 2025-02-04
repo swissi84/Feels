@@ -40,6 +40,7 @@ import de.syntax_institut.feels.ui.Views.CreateNewMoodView
 import de.syntax_institut.feels.ui.Views.HomeView
 import de.syntax_institut.feels.ui.Views.MoodDetailView
 import de.syntax_institut.feels.ui.Views.MoodListView
+import de.syntax_institut.feels.ui.Views.SettingsView
 import de.syntax_institut.feels.ui.theme.FeelsTheme
 import kotlinx.serialization.Serializable
 
@@ -58,10 +59,10 @@ class MainActivity : ComponentActivity() {
                     floatingActionButton = {
                         FloatingActionButton(
                             onClick = { navController.navigate(CreateNewMoodView) { popUpTo(MoodListView) {
-                                    inclusive = true // MoodListView bleibt erhalten
+                                    inclusive = true
                                 }
                                 launchSingleTop = true
-                                restoreState = false // Kein Zustand wird gespeichert
+                                restoreState = false
                             }
                         }) {
                             Icon(Icons.Filled.Add, contentDescription = "Neue Stimmung erstellen")
@@ -120,13 +121,8 @@ class MainActivity : ComponentActivity() {
                         }
 
                         composable<SettingsView> {
-                            CreateNewMoodView(
-                                viewModel = viewModel(),
-                                modifier = Modifier
-                            )
+                           SettingsView()
                         }
-
-
 
                         composable<MoodListView> {
                             MoodListView(
@@ -194,7 +190,7 @@ enum class NavItem(
 ) {
     First(HomeView, "Home", Icons.Filled.Home),
     Second(MoodListView, "Moods", Icons.Filled.Menu),
-    Third(CreateNewMoodView, "NewMood", Icons.Filled.Star),
+    Third(CreateNewMoodView, "NewMood", Icons.Filled.Add),
     Four(SettingsView, "Settings", Icons.Filled.Settings)
 
 }

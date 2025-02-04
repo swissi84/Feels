@@ -60,9 +60,9 @@ fun MoodListView(
 
     val isSorted by viewModel.isSorted.collectAsState()
     val sortedMoods = if (isSorted) {
-        moodEntrys.sortedBy { it.name }
+        moodEntrys.sortedByDescending { it.mood }
     } else {
-        moodEntrys.sortedBy { it.mood }
+        moodEntrys.sortedBy { it.name }
     }
 
     Column(

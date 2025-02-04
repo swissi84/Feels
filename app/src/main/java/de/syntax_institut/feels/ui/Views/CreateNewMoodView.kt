@@ -91,7 +91,7 @@ fun CreateNewMoodView(
         OutlinedTextField(
             value = newMoodName,
             onValueChange = { newMoodName = it },
-            placeholder = { Text("Text..") },
+            placeholder = { Text("Titel..") },
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -206,10 +206,10 @@ fun CreateNewMoodView(
                 modifier = Modifier
                     .padding(1.dp)
                     .alpha(0.4f),
-                onClick = { }
+                onClick = {  }
             )
             {
-                Text("Speichern")
+                Text("Bitte gib einen Titel ein!")
             }
         }
     }

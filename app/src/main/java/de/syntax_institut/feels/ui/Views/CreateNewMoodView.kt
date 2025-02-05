@@ -47,16 +47,18 @@ import de.syntax_institut.feels.ui.Views.ViewComponents.RoundedField
 @Composable
 fun CreateNewMoodView(
     viewModel: MoodListViewModel = viewModel(),
-
     modifier: Modifier
 ) {
 
     var sliderValue by remember { mutableStateOf(5f) }
     var selectedMood by remember { mutableStateOf("😐") }
 
-    val moodEmojis = listOf("😞", "😐", "😃")
+    val moodEmojis = listOf("😢", "😞", "😐", "😊", "😁", "🤩")
     var moodFactors = listOf("Finanzen", "Familie", "Gesundheit", "Arbeit", "Freizeit", "Liebe")
     val weatherFactors = listOf("☀️ Sonnig", "🌧 Regen", "☁️ Wolkig", "❄️ Kalt")
+
+    var selectedMoodFactor by remember { mutableStateOf<String?>(null) }
+    var selectedWeatherFactor by remember { mutableStateOf<String?>(null) }
 
     var newMoodName by remember { mutableStateOf("") }
     var newMoodText by remember { mutableStateOf("") }
@@ -95,9 +97,12 @@ fun CreateNewMoodView(
                 onValueChange = {
                     sliderValue = it
                     selectedMood = when {
-                        it < 4 -> moodEmojis[0]
-                        it < 7 -> moodEmojis[1]
-                        else -> moodEmojis[2]
+                        it < 2 -> moodEmojis[0] // Sehr schlecht 😢
+                        it < 4 -> moodEmojis[1] // Schlecht 😞
+                        it < 6 -> moodEmojis[2] // Neutral 😐
+                        it < 8 -> moodEmojis[3] // Gut 😊
+                        it < 9 -> moodEmojis[4] // Sehr gut 😁
+                        else -> moodEmojis[5] // Perfekt 🤩
                     }
                 },
                 valueRange = 1f..10f,
@@ -117,9 +122,6 @@ fun CreateNewMoodView(
             Text(selectedMood, fontSize = 40.sp)
         }
 
-        Text(text = "Wert: ${sliderValue.toDouble()}", fontSize = 20.sp)
-        Text("$sliderValue")
-
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(
@@ -134,15 +136,16 @@ fun CreateNewMoodView(
             modifier = Modifier
                 .fillMaxWidth()
                 .horizontalScroll(scrollState),
-
-
             horizontalArrangement = Arrangement.Center,
 
             ) {
+
             moodFactors.forEach { factor ->
                 RoundedField(
-                    label = factor, backgroundColor = Color(0xFF693BAB),
+                    label = factor,
+                    backgroundColor = if (selectedMoodFactor == factor) Color(0xFF693BAB) else Color.Gray,
                     onClick = {
+                        selectedMoodFactor = factor
                         newMoodFactor = factor
                     }
                 )
@@ -157,8 +160,10 @@ fun CreateNewMoodView(
         ) {
             weatherFactors.forEach { factor ->
                 RoundedField(
-                    label = factor, backgroundColor = Color(0xFF2B65EC),
+                    label = factor,
+                    backgroundColor = if (selectedWeatherFactor == factor) Color(0xFF2B65EC) else Color.Gray,
                     onClick = {
+                        selectedWeatherFactor = factor
                         newWeatherFactor = factor
                     }
                 )
@@ -205,14 +210,12 @@ fun CreateNewMoodView(
                 modifier = Modifier
                     .padding(1.dp)
                     .alpha(0.4f),
-                onClick = {  }
+                onClick = { }
             )
             {
                 Text("Bitte gib einen Titel ein!")
             }
         }
-        Text(newMoodFactor)
-        Text(newWeatherFactor)
     }
 }
 

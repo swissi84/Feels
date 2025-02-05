@@ -4,7 +4,6 @@ import android.app.Application
 import android.icu.text.SimpleDateFormat
 import android.os.Build
 import androidx.annotation.RequiresApi
-
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.AndroidViewModel
@@ -105,12 +104,15 @@ open class MoodListViewModel(application: Application) : AndroidViewModel(applic
     }
 
     fun MoodToEmoji(mood: Double): String {
-        val moodEmojis = listOf("😞", "😐", "😃")
+        val moodEmojis = listOf("😢", "😞", "😐", "😊", "😁", "🤩")
 
         return when {
-            mood < 4 -> moodEmojis[0]
-            mood < 7 -> moodEmojis[1]
-            else -> moodEmojis[2]
+            mood < 2 -> moodEmojis[0] // Sehr schlecht 😢
+            mood < 4 -> moodEmojis[1] // Schlecht 😞
+            mood < 6 -> moodEmojis[2] // Neutral 😐
+            mood < 8 -> moodEmojis[3] // Gut 😊
+            mood < 9 -> moodEmojis[4] // Sehr gut 😁
+            else -> moodEmojis[5] // Perfekt 🤩
         }
     }
 }

@@ -10,6 +10,7 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Menu
@@ -191,9 +192,9 @@ enum class NavItem(
     val icon: ImageVector,
 ) {
     First(HomeView, "Home", Icons.Filled.Home),
-    Second(MoodListView, "Moods", Icons.Filled.Menu),
-    Third(CreateNewMoodView, "NewMood", Icons.Filled.Add),
-    Four(SettingsView, "Settings", Icons.Filled.Settings)
+    Second(MoodListView, "Einträge", Icons.Filled.Menu),
+    Third(CreateNewMoodView, "Neuer Eintrag", Icons.Filled.Add),
+    Four(SettingsView, "Profil", Icons.Filled.AccountCircle)
 
 }
 

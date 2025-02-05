@@ -46,7 +46,6 @@ fun MoodDetailView(
 
         Text(modifier = Modifier
             .padding(30.dp),
-
             text = viewModel.MoodToEmoji(moodEntry.mood),
             style = MaterialTheme.typography.displayLarge
         )

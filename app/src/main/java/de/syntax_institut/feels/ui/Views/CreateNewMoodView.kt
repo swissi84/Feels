@@ -92,19 +92,16 @@ fun CreateNewMoodView(
         )
 
         Spacer(modifier = Modifier.height(16.dp))
-Row(
-    modifier = modifier
-        .fillMaxWidth(),
+        Row(
+            modifier = modifier
+                .fillMaxWidth(),
 
-    horizontalArrangement = Arrangement.SpaceBetween,
+            horizontalArrangement = Arrangement.SpaceBetween,
+        ) {
+            Text("Schecht")
 
-
-) {
-    Text("Schecht")
-
-    Text("Super")
-}
-
+            Text("Super")
+        }
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
@@ -219,6 +216,8 @@ Row(
                         name = newMoodName,
                         moodWeather = newWeatherFactor,
                     )
+                      newMoodName = ""
+                      newMoodText = ""
                 }
             )
             {

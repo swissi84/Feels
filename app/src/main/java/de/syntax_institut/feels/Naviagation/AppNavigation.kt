@@ -1,11 +1,6 @@
-package de.syntax_institut.feels
+package de.syntax_institut.feels.Naviagation
 
-import android.content.Context
 import android.os.Build
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -14,7 +9,6 @@ import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -25,9 +19,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -42,7 +33,6 @@ import de.syntax_institut.feels.ui.Views.HomeView
 import de.syntax_institut.feels.ui.Views.MoodDetailView
 import de.syntax_institut.feels.ui.Views.MoodListView
 import de.syntax_institut.feels.ui.Views.SettingsView
-import de.syntax_institut.feels.ui.theme.FeelsTheme
 import kotlinx.serialization.Serializable
 
 @RequiresApi(Build.VERSION_CODES.O)

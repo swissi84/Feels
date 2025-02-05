@@ -24,6 +24,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -41,27 +42,29 @@ import androidx.compose.ui.text.font.FontWeight
 
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import de.syntax_institut.feels.R
+import de.syntax_institut.feels.ui.Models.MoodListViewModel
+
 
 
 @Composable
 fun SettingsView(
-    modifier: Modifier = Modifier
-) {
+    modifier: Modifier = Modifier,
+   viewModel: MoodListViewModel = viewModel()
+    ) {
+
+    val isDarkMode by viewModel.isDarkMode.collectAsState()
 
     var userName by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var birthday by remember { mutableStateOf("") }
     var location by remember { mutableStateOf("") }
 
-    var isDarkMode by remember { mutableStateOf(false) }
-
-
-
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
-            .background(Color(0xFFFFE4C7)),
+            .background(if (isDarkMode) Color.Black else Color(0xFFFFE4C7)),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.height(40.dp))
@@ -163,7 +166,7 @@ fun SettingsView(
 
                 Switch(
                     checked = isDarkMode,
-                    onCheckedChange = { isDarkMode = it }
+                    onCheckedChange = { viewModel.DarkMode(it) }
                 )
             }
         }

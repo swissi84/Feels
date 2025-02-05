@@ -15,6 +15,8 @@ import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -34,10 +36,12 @@ fun MoodDetailView(
     modifier: Modifier = Modifier,
 ) {
 
+    val isDarkMode by viewModel.isDarkMode.collectAsState()
+
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFFFE4C7))
+            .background(if (isDarkMode) Color.Black else Color(0xFFFFE4C7))
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
@@ -94,8 +98,7 @@ fun MoodDetailView(
 @Preview(showBackground = true)
 @Composable
 fun MoodDetailViewPreview() {
-    FeelsTheme {
-        val previewMood =
+    val previewMood =
             MoodEntry(
                 name = "Test1",
                 mood = 5.0,
@@ -108,4 +111,3 @@ fun MoodDetailViewPreview() {
             moodEntry = previewMood
         )
     }
-}

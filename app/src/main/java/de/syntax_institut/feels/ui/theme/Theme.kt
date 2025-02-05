@@ -2,14 +2,23 @@ package de.syntax_institut.feels.ui.theme
 
 import android.app.Activity
 import android.os.Build
+import android.util.Log
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
+import de.syntax_institut.feels.ui.Models.MoodListViewModel
+import kotlinx.serialization.json.JsonNull.content
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,
@@ -35,23 +44,22 @@ private val LightColorScheme = lightColorScheme(
 
 @Composable
 fun FeelsTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    viewModel: MoodListViewModel = viewModel(),
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
-    val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }
 
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
+    val isDarkMode by viewModel.isDarkMode.collectAsState()
+
+    LaunchedEffect(isDarkMode) {
+        Log.d("DarkMode", "DarkMode: $isDarkMode")
     }
 
+    val colors = if (isDarkMode) darkColorScheme() else lightColorScheme()
+
     MaterialTheme(
-        colorScheme = colorScheme,
+        colorScheme = colors,
         typography = Typography,
         content = content
     )

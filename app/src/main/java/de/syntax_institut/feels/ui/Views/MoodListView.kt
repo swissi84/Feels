@@ -56,6 +56,7 @@ fun MoodListView(
     modifier: Modifier = Modifier,
 ) {
 
+    val isDarkMode by viewModel.isDarkMode.collectAsState()
     val moodEntrys by viewModel.items.collectAsState()
 
     val isSorted by viewModel.isSorted.collectAsState()
@@ -68,7 +69,7 @@ fun MoodListView(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(Color(0xFFFFE4C7))
+            .background(if (isDarkMode) Color.Black else Color(0xFFFFE4C7))
             .padding(16.dp)
             .padding(top = 30.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -177,9 +178,8 @@ fun MoodListView(
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun MoodListViewPreview() {
-    FeelsTheme {
+
         MoodListView(
             onNavigateToMoodDetailView = {}
         )
     }
-}

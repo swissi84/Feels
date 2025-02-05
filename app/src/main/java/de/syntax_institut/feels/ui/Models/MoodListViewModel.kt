@@ -1,6 +1,7 @@
 package de.syntax_institut.feels.ui.Models
 
 import android.app.Application
+import android.content.Context
 import android.icu.text.SimpleDateFormat
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -8,6 +9,7 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+
 import de.syntax_institut.feels.data.MoodEntry
 import de.syntax_institut.feels.data.MoodEntryDatabase
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,12 +19,17 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlin.String as String
 import de.syntax_institut.feels.dataStore
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
+
+import kotlinx.coroutines.flow.map
 import java.util.Date
 import java.util.Locale
 
 //DataStore
-val NAME_KEY = booleanPreferencesKey("isSorted")
+val SORTED_KEY = booleanPreferencesKey("isSorted")
+val DARK_MODE_KEY = booleanPreferencesKey("dark_mode")
 
 open class MoodListViewModel(application: Application) : AndroidViewModel(application) {
     //Room
@@ -50,12 +57,17 @@ open class MoodListViewModel(application: Application) : AndroidViewModel(applic
     private var _isSorted = MutableStateFlow(false)
     val isSorted = _isSorted.asStateFlow()
 
+    private val _isDarkMode = MutableStateFlow(false)
+    val isDarkMode = _isDarkMode.asStateFlow()
+
     init {
         //DataStore
         viewModelScope.launch {
             val allDataFromDataStore = datastore.data.first()
-            val savedValue = allDataFromDataStore[NAME_KEY] ?: false
+            val savedValue = allDataFromDataStore[SORTED_KEY] ?: false
+            val darkMode = allDataFromDataStore[DARK_MODE_KEY] ?: false
             _isSorted.value = savedValue
+            _isDarkMode.value = darkMode
         }
     }
 
@@ -91,10 +103,18 @@ open class MoodListViewModel(application: Application) : AndroidViewModel(applic
         }
     }
 
+    fun DarkMode(isDarkMode: Boolean) {
+        viewModelScope.launch {
+            _isDarkMode.value = isDarkMode
+            saveScoreToDataStore()
+        }
+    }
+
     //DataStore
     suspend fun saveScoreToDataStore() {
         datastore.edit { allMutableDataFromDataStore ->
-            allMutableDataFromDataStore[NAME_KEY] = _isSorted.value
+            allMutableDataFromDataStore[SORTED_KEY] = _isSorted.value
+            allMutableDataFromDataStore[DARK_MODE_KEY] = _isDarkMode.value
         }
     }
 

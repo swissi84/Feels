@@ -49,9 +49,11 @@ fun HomeView(
     viewModel: MoodListViewModel,
     ) {
 
+    val isDarkMode by viewModel.isDarkMode.collectAsState()
+
     Column(modifier = Modifier
         .fillMaxSize()
-        .background(Color(0xFFFFE4C7)),
+        .background(if (isDarkMode) Color.Black else Color(0xFFFFE4C7)),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.height(10.dp))

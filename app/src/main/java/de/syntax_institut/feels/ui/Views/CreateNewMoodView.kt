@@ -25,6 +25,7 @@ import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -42,6 +43,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 
 import de.syntax_institut.feels.ui.Models.MoodListViewModel
 import de.syntax_institut.feels.ui.Views.ViewComponents.RoundedField
+import de.syntax_institut.feels.ui.Views.ViewComponents.ShowAlertDialog
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -49,6 +51,10 @@ fun CreateNewMoodView(
     viewModel: MoodListViewModel = viewModel(),
     modifier: Modifier
 ) {
+
+    var showDialog by remember { mutableStateOf(false) }
+
+    val isDarkMode by viewModel.isDarkMode.collectAsState()
 
     var sliderValue by remember { mutableStateOf(5f) }
     var selectedMood by remember { mutableStateOf("😐") }
@@ -70,7 +76,7 @@ fun CreateNewMoodView(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(Color(0xFFFFE4C7))
+            .background(if (isDarkMode) Color.Black else Color(0xFFFFE4C7))
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -91,7 +97,7 @@ fun CreateNewMoodView(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text("Schlimm")
+            Text("")
             Slider(
                 value = sliderValue,
                 onValueChange = {
@@ -110,7 +116,7 @@ fun CreateNewMoodView(
                     .weight(1f),
                 colors = SliderDefaults.colors(thumbColor = Color.Yellow)
             )
-            Text("Super")
+            Text("")
         }
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -193,6 +199,7 @@ fun CreateNewMoodView(
             ElevatedButton(
                 modifier = Modifier.padding(1.dp),
                 onClick = {
+                    showDialog = true
                     viewModel.newMoodEntry(
                         mood = sliderValue.toDouble(),
                         moodFactor = newMoodFactor,
@@ -216,6 +223,9 @@ fun CreateNewMoodView(
                 Text("Bitte gib einen Titel ein!")
             }
         }
+
+        ShowAlertDialog(showDialog = showDialog, onDismiss = { showDialog = false })
+
     }
 }
 

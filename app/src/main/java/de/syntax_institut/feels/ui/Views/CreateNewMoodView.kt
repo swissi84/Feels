@@ -92,6 +92,18 @@ fun CreateNewMoodView(
         )
 
         Spacer(modifier = Modifier.height(16.dp))
+Row(
+    modifier = modifier
+        .fillMaxWidth(),
+
+    horizontalArrangement = Arrangement.SpaceBetween,
+
+
+) {
+    Text("Schecht")
+
+    Text("Super")
+}
 
         Row(
             modifier = Modifier.fillMaxWidth(),

@@ -54,18 +54,18 @@ fun AppNavigation(
         .fillMaxSize()
         .windowInsetsPadding(WindowInsets.statusBars),
 
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = { navController.navigate(CreateNewMoodView) { popUpTo(MoodListView) {
-                    inclusive = true
-                }
-                    launchSingleTop = true
-                    restoreState = false
-                }
-                }) {
-                Icon(Icons.Filled.Add, contentDescription = "Neue Stimmung erstellen")
-            }
-        },
+//        floatingActionButton = {
+//            FloatingActionButton(
+//                onClick = { navController.navigate(CreateNewMoodView) { popUpTo(MoodListView) {
+//                    inclusive = true
+//                }
+//                    launchSingleTop = true
+//                    restoreState = false
+//                }
+//                }) {
+//                Icon(Icons.Filled.Add, contentDescription = "Neue Stimmung erstellen")
+//            }
+//        },
         bottomBar = {
             NavigationBar(
                 containerColor = Color(0xFFFFE4C7),

@@ -102,8 +102,6 @@ fun SettingsView(
                     .fillMaxWidth()
                     .padding(horizontal = 20.dp),
                 colors = CardDefaults.elevatedCardColors(Color.Transparent)
-
-
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     OutlinedTextField(
@@ -114,7 +112,6 @@ fun SettingsView(
                             .fillMaxWidth()
                             .padding(vertical = 3.dp)
                     )
-
                     OutlinedTextField(
                         value = email,
                         onValueChange = { email = it },
@@ -123,7 +120,6 @@ fun SettingsView(
                             .fillMaxWidth()
                             .padding(vertical = 3.dp)
                     )
-
                     OutlinedTextField(
                         value = birthday,
                         onValueChange = { birthday = it },
@@ -132,7 +128,6 @@ fun SettingsView(
                             .fillMaxWidth()
                             .padding(vertical = 3.dp)
                     )
-
                     OutlinedTextField(
                         value = location,
                         onValueChange = { location = it },
@@ -145,7 +140,6 @@ fun SettingsView(
             }
 
             Spacer(modifier = Modifier.height(20.dp))
-
 
             Text(
                 text = "PERSÖNLICHE EINSTELLUNGEN",

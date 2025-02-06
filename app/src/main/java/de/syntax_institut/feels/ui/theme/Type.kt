@@ -26,7 +26,6 @@ val displayFontFamily = FontFamily(
     )
 )
 
-
 val baseline = Typography()
 
 val AppTypography = Typography(

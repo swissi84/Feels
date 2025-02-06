@@ -4,6 +4,7 @@ import android.app.Activity
 import android.os.Build
 import android.util.Log
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material.lightColors
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.darkColorScheme
@@ -14,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -29,24 +31,30 @@ private val DarkColorScheme = darkColorScheme(
 private val LightColorScheme = lightColorScheme(
     primary = Purple40,
     secondary = PurpleGrey40,
-    tertiary = SandBeige
+    tertiary = SandBeige,
 
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
+
+    background = Color(0xFF960E75),
+    surface = Color(0xFFD513A4),
+    onPrimary = Color.Red,
+    onSecondary = Color.Red,
+    onTertiary = Color.Red,
+    onBackground = Color(0xFF1E0EBB),
     onSurface = Color(0xFF1C1B1F),
-    */
+    surfaceContainer = Color.Gray
+
 )
+
+val myColors = lightColors(
+    background = Color.White,
+    surface = Color.White
+)
+
 
 @Composable
 fun FeelsTheme(
     viewModel: MoodListViewModel = viewModel(),
-    // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = false,
+    dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
 
@@ -56,11 +64,19 @@ fun FeelsTheme(
         Log.d("DarkMode", "DarkMode: $isDarkMode")
     }
 
-    val colors = if (isDarkMode) darkColorScheme() else lightColorScheme()
+    val colorScheme = when {
+        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
+            val context = LocalContext.current
+            if (isDarkMode) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+        }
+
+        isDarkMode -> DarkColorScheme
+        else -> DarkColorScheme
+    }
 
     MaterialTheme(
-        colorScheme = colors,
-        typography = Typography,
+        colorScheme = colorScheme,
+        typography = AppTypography,
         content = content
     )
 }

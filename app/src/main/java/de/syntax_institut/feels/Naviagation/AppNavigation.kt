@@ -2,8 +2,11 @@ package de.syntax_institut.feels.Naviagation
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Add
@@ -11,6 +14,7 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
@@ -18,7 +22,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -33,6 +40,7 @@ import de.syntax_institut.feels.ui.Views.HomeView
 import de.syntax_institut.feels.ui.Views.MoodDetailView
 import de.syntax_institut.feels.ui.Views.MoodListView
 import de.syntax_institut.feels.ui.Views.SettingsView
+import de.syntax_institut.feels.ui.Views.ViewComponents.FullScreenBackground
 import kotlinx.serialization.Serializable
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -42,7 +50,10 @@ fun AppNavigation(
 ) {
     val navController = rememberNavController()
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
-    Scaffold(modifier = Modifier.fillMaxSize(),
+    Scaffold(modifier = Modifier
+        .fillMaxSize()
+        .windowInsetsPadding(WindowInsets.statusBars),
+
         floatingActionButton = {
             FloatingActionButton(
                 onClick = { navController.navigate(CreateNewMoodView) { popUpTo(MoodListView) {
@@ -56,7 +67,11 @@ fun AppNavigation(
             }
         },
         bottomBar = {
-            NavigationBar {
+            NavigationBar(
+                containerColor = Color(0xFFFFE4C7),
+                tonalElevation = 5.dp
+            )
+                {
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 val currentDestination = navBackStackEntry?.destination
 
@@ -80,8 +95,15 @@ fun AppNavigation(
                             )
                         },
                         label = {
-                            Text(item.label)
+                            Text(
+                                text = item.label,
+                                style = MaterialTheme.typography.titleMedium,
+                                fontWeight = FontWeight.Bold
+
+                            )
+
                         },
+
                     )
                 }
             }

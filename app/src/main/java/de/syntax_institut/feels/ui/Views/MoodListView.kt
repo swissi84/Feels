@@ -42,6 +42,7 @@ import de.syntax_institut.feels.ui.Models.MoodListViewModel
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.SwipeToDismiss
 import androidx.compose.material.rememberDismissState
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.tooling.preview.Preview
 import de.syntax_institut.feels.ui.theme.FeelsTheme
 
@@ -66,109 +67,120 @@ fun MoodListView(
         moodEntrys.sortedBy { it.name }
     }
 
-    Column(
-        modifier = modifier
+    Box(
+        modifier = Modifier
             .fillMaxSize()
-            .background(if (isDarkMode) Color.Black else Color(0xFFFFE4C7))
-            .padding(16.dp)
-            .padding(top = 30.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+            .background(
+                brush = Brush.linearGradient(
+                    colors = listOf(Color.White, Color(0xFFFFE4C7))
+                )
+            )
     ) {
 
-        Row(
-            modifier = Modifier
-                .fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.End
+        Column(
+            modifier = modifier
+                .fillMaxSize()
+                /*     .background(if (isDarkMode) Color.Black else Color(0xFFFFE4C7))*/
+                .padding(16.dp)
+                .padding(top = 30.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            Text(
-                text = if (isSorted) "             Stimmung" else "Alphabetisch",
-                color = if (isSorted) Color.Blue else Color.Black,
-                style = MaterialTheme.typography.titleMedium
-            )
-            Spacer(modifier = Modifier.padding(horizontal = 5.dp))
-            Switch(
-                checked = isSorted,
-                onCheckedChange = { viewModel.sorting() }
-            )
-        }
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.End
+            ) {
 
-        Spacer(modifier = Modifier.padding(horizontal = 50.dp))
-
-        LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            modifier = Modifier.fillMaxSize()
-        ) {
-            items(
-                sortedMoods,
-                key = { it.id }
-            ) { mood ->
-                val dismissState = rememberDismissState(
-                    confirmStateChange = {
-                        if (it == DismissValue.DismissedToStart) {
-                            viewModel.deleteTask(mood)
-                            true
-                        } else {
-                            false
-                        }
-                    }
+                Text(
+                    text = if (isSorted) "             Stimmung" else "Alphabetisch",
+                    color = if (isSorted) Color.Blue else Color.Black,
+                    style = MaterialTheme.typography.titleLarge
                 )
+                Spacer(modifier = Modifier.padding(horizontal = 5.dp))
+                Switch(
+                    checked = isSorted,
+                    onCheckedChange = { viewModel.sorting() }
+                )
+            }
 
-                SwipeToDismiss(
-                    state = dismissState,
-                    directions = setOf(DismissDirection.EndToStart),
-                    background = {
-                        val color = when (dismissState.targetValue) {
-                            DismissValue.DismissedToStart -> Color.Red
-                            else -> Color.Transparent
+            Spacer(modifier = Modifier.padding(horizontal = 50.dp))
+
+            LazyColumn(
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                modifier = Modifier.fillMaxSize()
+            ) {
+                items(
+                    sortedMoods,
+                    key = { it.id }
+                ) { mood ->
+                    val dismissState = rememberDismissState(
+                        confirmStateChange = {
+                            if (it == DismissValue.DismissedToStart) {
+                                viewModel.deleteTask(mood)
+                                true
+                            } else {
+                                false
+                            }
                         }
-                        Box(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .background(
-                                    color,
-                                    shape = RoundedCornerShape(12.dp)
-                                )
-                                .padding(horizontal = 16.dp),
-                            contentAlignment = Alignment.CenterEnd,
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Delete,
-                                contentDescription = "Task löschen",
-                                tint = Color.White
-                            )
-                        }
-                    },
-                    dismissContent = {
-                        ElevatedCard(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .clickable { onNavigateToMoodDetailView(mood) },
-                            shape = RoundedCornerShape(12.dp)
-                        ) {
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                modifier = Modifier.padding(16.dp)
+                    )
+
+                    SwipeToDismiss(
+                        state = dismissState,
+                        directions = setOf(DismissDirection.EndToStart),
+                        background = {
+                            val color = when (dismissState.targetValue) {
+                                DismissValue.DismissedToStart -> Color.Red
+                                else -> Color.Transparent
+                            }
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .background(
+                                        color,
+                                        shape = RoundedCornerShape(12.dp)
+                                    )
+                                    .padding(horizontal = 16.dp),
+                                contentAlignment = Alignment.CenterEnd,
                             ) {
-                                Column(
-                                    modifier = Modifier.weight(1f)
+                                Icon(
+                                    imageVector = Icons.Default.Delete,
+                                    contentDescription = "Task löschen",
+                                    tint = Color.White
+                                )
+                            }
+                        },
+                        dismissContent = {
+                            ElevatedCard(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .clickable { onNavigateToMoodDetailView(mood) },
+                                shape = RoundedCornerShape(12.dp)
+                            ) {
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    modifier = Modifier.padding(16.dp)
                                 ) {
-                                    Text(
-                                        text = mood.name,
-                                        style = MaterialTheme.typography.titleMedium
-                                    )
+                                    Column(
+                                        modifier = Modifier.weight(1f)
+                                    ) {
+                                        Text(
+                                            text = mood.name,
+                                            style = MaterialTheme.typography.headlineMedium
+                                        )
 
-                                    Text(
-                                        text = viewModel.formatTimestamp(mood.timestamp),
-                                        style = MaterialTheme.typography.bodySmall
-                                    )
+                                        Text(
+                                            text = viewModel.formatTimestamp(mood.timestamp),
+                                            style = MaterialTheme.typography.bodyLarge
+                                        )
+                                    }
                                 }
                             }
                         }
-                    }
-                )
+                    )
+                }
             }
         }
     }

@@ -27,6 +27,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
@@ -37,9 +39,12 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import de.syntax_institut.feels.R
 import de.syntax_institut.feels.data.MoodEntry
 import de.syntax_institut.feels.ui.Models.MoodListViewModel
+import de.syntax_institut.feels.ui.Views.ViewComponents.FullScreenBackground
 import de.syntax_institut.feels.ui.Views.ViewComponents.MoodChart
 import de.syntax_institut.feels.ui.Views.ViewComponents.MoodIndicator
 import de.syntax_institut.feels.ui.theme.FeelsTheme
+import de.syntax_institut.feels.ui.theme.lemonYellow
+import de.syntax_institut.feels.ui.theme.skyBlue
 import java.time.LocalDate
 
 
@@ -51,51 +56,62 @@ fun HomeView(
 
     val isDarkMode by viewModel.isDarkMode.collectAsState()
 
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .background(if (isDarkMode) Color.Black else Color(0xFFFFE4C7)),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Spacer(modifier = Modifier.height(10.dp))
-
-        Image(
-            painter = painterResource(id = R.drawable.feelstitel),
-            contentDescription = "Header Image",
-            modifier = Modifier
-                .clip(shape = RoundedCornerShape(16.dp))
-                .scale(1.5f)
-                .size(320.dp, 150.dp)
-        )
-
-        Spacer(modifier = Modifier.height(20.dp))
-
-        Text(text = "Stimmungs Tendenz:", fontSize = 20.sp, modifier = Modifier.padding(8.dp))
-
-        Box(
-            modifier = Modifier
-                .padding(16.dp)
-                .graphicsLayer(
-                    shadowElevation = 15f,
-                    shape = CircleShape,
-                    clip = true
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(
+                brush = Brush.linearGradient(
+                    colors = listOf(Color.White, Color(0xFFFFE4C7))
                 )
-                .background(Color.White)
+            )
+    ) {
+
+        Column(
+            modifier = Modifier
+                .fillMaxSize(),
+//                .background(if (isDarkMode) Color.Black else Color(0xFFFFE4C7)),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            MoodIndicator(viewModel = viewModel)
+            Spacer(modifier = Modifier.height(10.dp))
+
+            Image(
+                painter = painterResource(id = R.drawable.feelstitel),
+                contentDescription = "Header Image",
+                modifier = Modifier
+                    .clip(shape = RoundedCornerShape(16.dp))
+                    .scale(1.5f)
+                    .size(400.dp, 200.dp)
+            )
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+            Text(text = "Stimmungs Tendenz:", fontSize = 30.sp, modifier = Modifier.padding(8.dp))
+
+            Box(
+                modifier = Modifier
+                    .padding(16.dp)
+                    .graphicsLayer(
+                        shadowElevation = 15f,
+                        shape = CircleShape,
+                        clip = true
+                    )
+                    .background(Color.White)
+            ) {
+                MoodIndicator(viewModel = viewModel)
+            }
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            Text(
+                text = "Stimmungen der letzten 7 Tage:",
+                fontSize = 30.sp,
+                modifier = Modifier.padding(8.dp)
+            )
+
+            MoodChart(viewModel = viewModel)
         }
-
-        Spacer(modifier = Modifier.height(20.dp))
-
-        Text(
-            text = "Stimmungen der letzten 7 Tage:",
-            fontSize = 20.sp,
-            modifier = Modifier.padding(8.dp)
-        )
-
-        MoodChart(viewModel = viewModel)
     }
 }
-
 
 
 

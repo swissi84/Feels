@@ -52,7 +52,7 @@ fun MoodChart(
             }
 
             val dataSet = BarDataSet(entries, "Mood").apply {
-                color = android.graphics.Color.rgb(202, 190, 255)
+                color = android.graphics.Color.rgb(218, 226, 255)
                 valueTextSize = 12f
             }
 

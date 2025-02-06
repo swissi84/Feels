@@ -5,6 +5,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -61,116 +62,126 @@ fun SettingsView(
     var birthday by remember { mutableStateOf("") }
     var location by remember { mutableStateOf("") }
 
-    Column(
-        modifier = modifier
+    Box(
+        modifier = Modifier
             .fillMaxSize()
-            .background(if (isDarkMode) Color.Black else Color(0xFFFFE4C7)),
-        horizontalAlignment = Alignment.CenterHorizontally
+            .background(
+                brush = Brush.linearGradient(
+                    colors = listOf(Color.White, Color(0xFFFFE4C7))
+                )
+            )
     ) {
-        Spacer(modifier = Modifier.height(40.dp))
 
-        Image(
-            painter = painterResource(id = R.drawable.dog),
-            contentDescription = "Profilbild",
-            modifier = Modifier
-                .size(150.dp)
-                .clip(CircleShape)
-                .background(Color.DarkGray),
-            contentScale = ContentScale.Crop
-        )
-
-        Spacer(modifier = Modifier.height(20.dp))
-
-        Text(
-            text = "PERSÖNLICHE INFORMATIONEN",
-            fontSize = 12.sp,
-            color = Color.Gray,
-            fontWeight = FontWeight.Bold
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 20.dp),
-            colors = CardDefaults.elevatedCardColors(Color.Transparent)
-
-
+        Column(
+            modifier = modifier
+                .fillMaxSize(),
+            /*    .background(if (isDarkMode) Color.Black else Color(0xFFFFE4C7)),*/
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Column(modifier = Modifier.padding(16.dp)) {
-              OutlinedTextField(
-                  value = userName,
-                  onValueChange = { userName = it },
-                  placeholder = { Text("Benutzername..") },
-                  modifier = Modifier
-                      .fillMaxWidth()
-                      .padding(vertical = 3.dp)
-              )
+            Spacer(modifier = Modifier.height(40.dp))
 
-                OutlinedTextField(
-                    value = email,
-                    onValueChange = { email = it },
-                    placeholder = { Text("Email..") },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 3.dp)
-                )
+            Image(
+                painter = painterResource(id = R.drawable.dog),
+                contentDescription = "Profilbild",
+                modifier = Modifier
+                    .size(150.dp)
+                    .clip(CircleShape)
+                    .background(Color.DarkGray),
+                contentScale = ContentScale.Crop
+            )
 
-                OutlinedTextField(
-                    value = birthday,
-                    onValueChange = { birthday = it },
-                    placeholder = { Text("Geburtstag..") },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 3.dp)
-                )
+            Spacer(modifier = Modifier.height(20.dp))
 
-                OutlinedTextField(
-                    value = location,
-                    onValueChange = { location = it },
-                    placeholder = { Text("Ort..") },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 3.dp)
-                )
-            }
-        }
+            Text(
+                text = "PERSÖNLICHE INFORMATIONEN",
+                fontSize = 12.sp,
+                color = Color.Gray,
+                fontWeight = FontWeight.Bold
+            )
 
-        Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(8.dp))
 
-
-        Text(
-            text = "PERSÖNLICHE EINSTELLUNGEN",
-            fontSize = 12.sp,
-            color = Color.Gray,
-            fontWeight = FontWeight.Bold
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 20.dp),
-            colors = CardDefaults.elevatedCardColors(Color.Transparent)
-            ) {
-            Row(
+            Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(text = "Dark Mode", fontSize = 16.sp)
+                    .padding(horizontal = 20.dp),
+                colors = CardDefaults.elevatedCardColors(Color.Transparent)
 
-                Switch(
-                    checked = isDarkMode,
-                    onCheckedChange = { viewModel.DarkMode(it) }
-                )
+
+            ) {
+                Column(modifier = Modifier.padding(16.dp)) {
+                    OutlinedTextField(
+                        value = userName,
+                        onValueChange = { userName = it },
+                        placeholder = { Text("Benutzername..") },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 3.dp)
+                    )
+
+                    OutlinedTextField(
+                        value = email,
+                        onValueChange = { email = it },
+                        placeholder = { Text("Email..") },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 3.dp)
+                    )
+
+                    OutlinedTextField(
+                        value = birthday,
+                        onValueChange = { birthday = it },
+                        placeholder = { Text("Geburtstag..") },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 3.dp)
+                    )
+
+                    OutlinedTextField(
+                        value = location,
+                        onValueChange = { location = it },
+                        placeholder = { Text("Ort..") },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 3.dp)
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+
+            Text(
+                text = "PERSÖNLICHE EINSTELLUNGEN",
+                fontSize = 12.sp,
+                color = Color.Gray,
+                fontWeight = FontWeight.Bold
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 20.dp),
+                colors = CardDefaults.elevatedCardColors(Color.Transparent)
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(text = "Dark Mode", fontSize = 16.sp)
+
+                    Switch(
+                        checked = isDarkMode,
+                        onCheckedChange = { viewModel.DarkMode(it) }
+                    )
+                }
             }
         }
     }
 }
-
 

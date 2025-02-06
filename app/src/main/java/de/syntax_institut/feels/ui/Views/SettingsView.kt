@@ -47,8 +47,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import de.syntax_institut.feels.R
 import de.syntax_institut.feels.ui.Models.MoodListViewModel
 
-
-
 @Composable
 fun SettingsView(
     modifier: Modifier = Modifier,
@@ -71,7 +69,6 @@ fun SettingsView(
                 )
             )
     ) {
-
         Column(
             modifier = modifier
                 .fillMaxSize(),
@@ -94,8 +91,7 @@ fun SettingsView(
 
             Text(
                 text = "PERSÖNLICHE INFORMATIONEN",
-                fontSize = 12.sp,
-                color = Color.Gray,
+                fontSize = 20.sp,
                 fontWeight = FontWeight.Bold
             )
 
@@ -153,8 +149,7 @@ fun SettingsView(
 
             Text(
                 text = "PERSÖNLICHE EINSTELLUNGEN",
-                fontSize = 12.sp,
-                color = Color.Gray,
+                fontSize = 20.sp,
                 fontWeight = FontWeight.Bold
             )
 
@@ -173,12 +168,12 @@ fun SettingsView(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(text = "Dark Mode", fontSize = 16.sp)
-
-                    Switch(
-                        checked = isDarkMode,
-                        onCheckedChange = { viewModel.DarkMode(it) }
-                    )
+//                    Text(text = "Dark Mode", fontSize = 16.sp)
+//
+//                    Switch(
+//                        checked = isDarkMode,
+//                        onCheckedChange = { viewModel.DarkMode(it) }
+//                    )
                 }
             }
         }

@@ -17,6 +17,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.syntax_institut.feels.ui.Models.MoodListViewModel
@@ -25,7 +27,16 @@ import kotlinx.serialization.json.JsonNull.content
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,
     secondary = PurpleGrey80,
-    tertiary = SandBeige
+    tertiary = SandBeige,
+
+    background = Color(0xFF2C2825),
+    surface = Color(0xFFD513A4),
+    onPrimary = Color(0xFFD513A4),
+    onSecondary = Color(0xFFD513A4),
+    onTertiary = Color(0xFFD51313),
+    onBackground = Color(0xFFFCFCFD),
+    onSurface = Color(0xFFFFFFFF),
+    surfaceContainer = Color.White
 )
 
 private val LightColorScheme = lightColorScheme(
@@ -34,35 +45,23 @@ private val LightColorScheme = lightColorScheme(
     tertiary = SandBeige,
 
 
-    background = Color(0xFF960E75),
+    background = Color.Transparent,
     surface = Color(0xFFD513A4),
     onPrimary = Color.Red,
     onSecondary = Color.Red,
     onTertiary = Color.Red,
-    onBackground = Color(0xFF1E0EBB),
+    onBackground = Color(0xFF131212),
     onSurface = Color(0xFF1C1B1F),
     surfaceContainer = Color.Gray
 
 )
 
-val myColors = lightColors(
-    background = Color.White,
-    surface = Color.White
-)
-
-
 @Composable
 fun FeelsTheme(
-    viewModel: MoodListViewModel = viewModel(),
-    dynamicColor: Boolean = true,
+    isDarkMode: Boolean = isSystemInDarkTheme(),
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
-
-    val isDarkMode by viewModel.isDarkMode.collectAsState()
-
-    LaunchedEffect(isDarkMode) {
-        Log.d("DarkMode", "DarkMode: $isDarkMode")
-    }
 
     val colorScheme = when {
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
@@ -71,7 +70,7 @@ fun FeelsTheme(
         }
 
         isDarkMode -> DarkColorScheme
-        else -> DarkColorScheme
+        else -> LightColorScheme
     }
 
     MaterialTheme(

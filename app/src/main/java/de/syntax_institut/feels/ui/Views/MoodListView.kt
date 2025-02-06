@@ -46,7 +46,6 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.tooling.preview.Preview
 import de.syntax_institut.feels.ui.theme.FeelsTheme
 
-
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterialApi::class)
 @Suppress
@@ -70,17 +69,11 @@ fun MoodListView(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(
-                brush = Brush.linearGradient(
-                    colors = listOf(Color.White, Color(0xFFFFE4C7))
-                )
-            )
     ) {
 
         Column(
             modifier = modifier
                 .fillMaxSize()
-                /*     .background(if (isDarkMode) Color.Black else Color(0xFFFFE4C7))*/
                 .padding(16.dp)
                 .padding(top = 30.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),

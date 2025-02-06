@@ -43,11 +43,11 @@ fun MoodDetailView(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(
-                brush = Brush.linearGradient(
-                    colors = listOf(Color.White, Color(0xFFFFE4C7))
-                )
-            )
+//            .background(
+//                brush = Brush.linearGradient(
+//                    colors = listOf(Color.White, Color(0xFFFFE4C7))
+//                )
+//            )
     ) {
 
         Column(
@@ -107,20 +107,4 @@ fun MoodDetailView(
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
-@Preview(showBackground = true)
-@Composable
-fun MoodDetailViewPreview() {
-    val previewMood =
-            MoodEntry(
-                name = "Test1",
-                mood = 5.0,
-                moodFactor = "Familie",
-                timestamp = System.currentTimeMillis(),
-                moodText = "Test",
-                moodWeather = "Sonnig"
-            )
-        MoodDetailView(
-            moodEntry = previewMood
-        )
-    }
+

@@ -26,8 +26,6 @@ fun MoodChart(
 ) {
     val moodEntries by viewModel.last7MoodEntries.collectAsState()
 
-
-
     AndroidView(
         factory = { context ->
             BarChart(context).apply {

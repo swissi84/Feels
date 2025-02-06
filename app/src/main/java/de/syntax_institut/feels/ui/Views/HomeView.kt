@@ -42,6 +42,7 @@ import de.syntax_institut.feels.ui.Models.MoodListViewModel
 import de.syntax_institut.feels.ui.Views.ViewComponents.FullScreenBackground
 import de.syntax_institut.feels.ui.Views.ViewComponents.MoodChart
 import de.syntax_institut.feels.ui.Views.ViewComponents.MoodIndicator
+import de.syntax_institut.feels.ui.Views.ViewComponents.RotatingCircle
 import de.syntax_institut.feels.ui.theme.FeelsTheme
 import de.syntax_institut.feels.ui.theme.lemonYellow
 import de.syntax_institut.feels.ui.theme.skyBlue
@@ -59,17 +60,18 @@ fun HomeView(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(
-                brush = Brush.linearGradient(
-                    colors = listOf(Color.White, Color(0xFFFFE4C7))
-                )
-            )
+//            .background(
+//                brush = Brush.linearGradient(
+//                    colors = listOf(Color.White, Color(0xFFFFE4C7)),
+//                    start = Offset(0.0f, 0.0f),
+//                    end = Offset(0.0f, 0.0f)
+//                )
+//            )
     ) {
 
         Column(
             modifier = Modifier
                 .fillMaxSize(),
-//                .background(if (isDarkMode) Color.Black else Color(0xFFFFE4C7)),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.height(10.dp))
@@ -98,6 +100,8 @@ fun HomeView(
                     .background(Color.White)
             ) {
                 MoodIndicator(viewModel = viewModel)
+
+
             }
 
             Spacer(modifier = Modifier.height(10.dp))

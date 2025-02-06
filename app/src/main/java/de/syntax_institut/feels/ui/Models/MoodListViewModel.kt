@@ -4,11 +4,14 @@ import android.app.Application
 import android.content.Context
 import android.icu.text.SimpleDateFormat
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import com.github.mikephil.charting.utils.Utils.init
 
 import de.syntax_institut.feels.data.MoodEntry
 import de.syntax_institut.feels.data.MoodEntryDatabase
@@ -106,7 +109,8 @@ open class MoodListViewModel(application: Application) : AndroidViewModel(applic
     fun DarkMode(isDarkMode: Boolean) {
         viewModelScope.launch {
             _isDarkMode.value = isDarkMode
-            saveScoreToDataStore()
+        /*    saveScoreToDataStore()*/
+            Log.d("DarkMode", "DarkModeViewModel: $isDarkMode")
         }
     }
 

@@ -80,18 +80,17 @@ fun CreateNewMoodView(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(
-                brush = Brush.linearGradient(
-                    colors = listOf(Color.White, Color(0xFFFFE4C7))
-                )
-            )
+//            .background(
+//                brush = Brush.linearGradient(
+//                    colors = listOf(Color.White, Color(0xFFFFE4C7))
+//                )
+//            )
     ) {
 
 
         Column(
             modifier = modifier
                 .fillMaxSize()
-//                .background(if (isDarkMode) Color.Black else Color(0xFFFFE4C7))
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {

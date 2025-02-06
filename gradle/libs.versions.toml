@@ -16,6 +16,7 @@ kspVersion = "2.0.21-1.0.27"
 storage = "1.5.0"
 composeMaterial = "1.4.0"
 uiTextGoogleFontsVersion = "1.7.7"
+compose = "1.7.7"
 
 
 [libraries]
@@ -43,6 +44,8 @@ androidx-storage = { group = "androidx.test.services", name = "storage", version
 kotlinx-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinSerialization" }
 androidx-compose-material = { group = "androidx.wear.compose", name = "compose-material", version.ref = "composeMaterial" }
 ui-text-google-fonts = { group = "androidx.compose.ui", name = "ui-text-google-fonts", version.ref = "uiTextGoogleFontsVersion" }
+androidx-compose-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "compose" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

@@ -50,7 +50,7 @@ import de.syntax_institut.feels.ui.Models.MoodListViewModel
 @Composable
 fun SettingsView(
     modifier: Modifier = Modifier,
-   viewModel: MoodListViewModel = viewModel()
+   viewModel: MoodListViewModel,
     ) {
 
     val isDarkMode by viewModel.isDarkMode.collectAsState()
@@ -63,16 +63,15 @@ fun SettingsView(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(
-                brush = Brush.linearGradient(
-                    colors = listOf(Color.White, Color(0xFFFFE4C7))
-                )
-            )
+//            .background(
+//                brush = Brush.linearGradient(
+//                    colors = listOf(Color.White, Color(0xFFFFE4C7))
+//                )
+//            )
     ) {
         Column(
             modifier = modifier
                 .fillMaxSize(),
-            /*    .background(if (isDarkMode) Color.Black else Color(0xFFFFE4C7)),*/
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.height(40.dp))
@@ -162,12 +161,12 @@ fun SettingsView(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-//                    Text(text = "Dark Mode", fontSize = 16.sp)
-//
-//                    Switch(
-//                        checked = isDarkMode,
-//                        onCheckedChange = { viewModel.DarkMode(it) }
-//                    )
+                    Text(text = "Dark Mode", fontSize = 16.sp)
+
+                    Switch(
+                        checked = isDarkMode,
+                        onCheckedChange = { viewModel.DarkMode(it) }
+                    )
                 }
             }
         }

@@ -42,8 +42,10 @@ import de.syntax_institut.feels.ui.Models.MoodListViewModel
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.SwipeToDismiss
 import androidx.compose.material.rememberDismissState
+import androidx.compose.material3.CardDefaults
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.tooling.preview.Preview
+import de.syntax_institut.feels.ui.Views.ViewComponents.getMoodColor
 import de.syntax_institut.feels.ui.theme.FeelsTheme
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -56,7 +58,6 @@ fun MoodListView(
     modifier: Modifier = Modifier,
 ) {
 
-    val isDarkMode by viewModel.isDarkMode.collectAsState()
     val moodEntrys by viewModel.items.collectAsState()
 
     val isSorted by viewModel.isSorted.collectAsState()
@@ -89,7 +90,6 @@ fun MoodListView(
 
                 Text(
                     text = if (isSorted) "             Stimmung" else "Alphabetisch",
-                    color = if (isSorted) Color.Blue else Color.Black,
                     style = MaterialTheme.typography.titleLarge
                 )
                 Spacer(modifier = Modifier.padding(horizontal = 5.dp))
@@ -150,7 +150,9 @@ fun MoodListView(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .clickable { onNavigateToMoodDetailView(mood) },
-                                shape = RoundedCornerShape(12.dp)
+                                shape = RoundedCornerShape(12.dp),
+                                colors = CardDefaults.elevatedCardColors(
+                                    containerColor = getMoodColor(mood.mood.toInt()))
                             ) {
                                 Row(
                                     verticalAlignment = Alignment.CenterVertically,
@@ -183,8 +185,7 @@ fun MoodListView(
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun MoodListViewPreview() {
-
-        MoodListView(
+    MoodListView(
             onNavigateToMoodDetailView = {}
         )
     }

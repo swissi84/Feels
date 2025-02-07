@@ -74,7 +74,7 @@ fun AppNavigation(
                 .fillMaxSize()
                 .background(
                 brush = Brush.linearGradient(
-                    colors = listOf(Color.White, Color(0xFFF6B47C)),
+                    colors = listOf(Color(0xFFFFD5B2), Color(0xFFFFA262)),
                     )
             )
         ) {

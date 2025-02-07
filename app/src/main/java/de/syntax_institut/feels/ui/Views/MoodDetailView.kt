@@ -37,23 +37,13 @@ fun MoodDetailView(
     moodEntry: MoodEntry,
     modifier: Modifier = Modifier,
 ) {
-
-    val isDarkMode by viewModel.isDarkMode.collectAsState()
-
     Box(
         modifier = Modifier
             .fillMaxSize()
-//            .background(
-//                brush = Brush.linearGradient(
-//                    colors = listOf(Color.White, Color(0xFFFFE4C7))
-//                )
-//            )
     ) {
-
         Column(
             modifier = Modifier
                 .fillMaxSize()
-          /*      .background(if (isDarkMode) Color.Black else Color(0xFFFFE4C7))*/
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
@@ -67,13 +57,16 @@ fun MoodDetailView(
                 style = MaterialTheme.typography.displayLarge
             )
 
-            Text("Am ${viewModel.formatTimestamp(moodEntry.timestamp)} fühltest du dich:")
+            Text(
+                text = "Am ${viewModel.formatTimestamp(moodEntry.timestamp)} fühltest du dich:",
+                style = MaterialTheme.typography.headlineSmall
+            )
 
             Text(
                 modifier = modifier
                     .padding(16.dp),
                 text = moodEntry.name,
-                style = MaterialTheme.typography.headlineLarge
+                style = MaterialTheme.typography.displayLarge
             )
 
             Spacer(modifier = Modifier.height(20.dp))
@@ -82,12 +75,16 @@ fun MoodDetailView(
                 modifier = Modifier
                     .padding(horizontal = 35.dp),
                 text = moodEntry.moodText,
-                style = MaterialTheme.typography.titleSmall
+                style = MaterialTheme.typography.headlineMedium
             )
 
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(100.dp))
 
-            Text("Beeinflusst durch:")
+            Text(
+               text =  "Beeinflusst durch:",
+                style = MaterialTheme.typography.headlineMedium
+            )
+
             Row {
                 RoundedField(
                     label = moodEntry.moodFactor,
@@ -101,8 +98,15 @@ fun MoodDetailView(
 
             }
             Spacer(modifier = Modifier.height(20.dp))
-            Text("Stimmungs Wert:")
-            Text(moodEntry.mood.toString())
+            Text(
+              text =  "Stimmungs Wert:",
+                style = MaterialTheme.typography.headlineMedium
+
+                )
+            Text(
+               text =  String.format("%.2f", moodEntry.mood),
+                style = MaterialTheme.typography.headlineLarge
+            )
         }
     }
 }

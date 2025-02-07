@@ -31,6 +31,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -79,10 +80,11 @@ fun HomeView(
             Image(
                 painter = painterResource(id = R.drawable.feelstitel),
                 contentDescription = "Header Image",
+                contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .clip(shape = RoundedCornerShape(16.dp))
-                    .scale(1.5f)
-                    .size(400.dp, 200.dp)
+
+                    .scale(1f)
+                    .size(420.dp, 200.dp)
             )
 
             Spacer(modifier = Modifier.height(20.dp))

@@ -34,13 +34,14 @@ fun MoodChart(
                 axisRight.isEnabled = false
                 axisLeft.axisMinimum = 1f
 
-
+                // Optional: Achsenbeschriftungen ausblenden
+                xAxis.setDrawLabels(false)
+                axisLeft.setDrawLabels(false)
 
                 xAxis.apply {
                     position = XAxis.XAxisPosition.BOTTOM
                     setDrawGridLines(false)
                     granularity = 1f
-
                 }
             }
         },
@@ -52,6 +53,7 @@ fun MoodChart(
             val dataSet = BarDataSet(entries, "Mood").apply {
                 color = android.graphics.Color.rgb(20, 152, 0)
                 valueTextSize = 12f
+                setDrawValues(false)  // Keine Werte (Beschriftungen) auf den Balken anzeigen
             }
 
             chart.data = BarData(dataSet)
@@ -62,4 +64,5 @@ fun MoodChart(
             .fillMaxWidth()
     )
 }
+
 

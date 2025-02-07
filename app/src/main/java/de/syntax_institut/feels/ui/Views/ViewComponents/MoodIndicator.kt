@@ -36,6 +36,6 @@ fun MoodIndicator(
 
         contentDescription = if (averageMood >= 5) "Positive Mood" else "Negative Mood",
         tint = if (averageMood >= 5) Color(0xFF4CAF50) else Color.Red,
-        modifier = Modifier.size(100.dp)
+        modifier = Modifier.size(90.dp)
     )
 }
